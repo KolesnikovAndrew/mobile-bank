@@ -45,7 +45,6 @@ const atmSlice = createSlice({
     addAtm: (state, action: PayloadAction<Atm>) => {
       state.atms.push(action.payload);
     },
-    // Другие действия для обновления состояния банкоматов
   },
 });
 

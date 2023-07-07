@@ -1,5 +1,3 @@
-// entities/atms/ui/AtmsList.tsx
-
 import React from "react";
 import { Atm } from "../model/atms";
 import AtmCard from "./atmsCard";

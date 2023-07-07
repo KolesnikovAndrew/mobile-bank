@@ -1,10 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit';
-import atmReducer from '../features/atmsSearch/atmsSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import atmReducer from "../features/atmsSearch/atmsSlice";
 
 const store = configureStore({
   reducer: {
     atm: atmReducer,
-    // Другие редюсеры вашего приложения
   },
 });
 
