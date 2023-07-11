@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import atmReducer from "../features/atmsSearch/atmsSlice";
-
+import userReducer from "../features/userCard/userSlice";
 const store = configureStore({
   reducer: {
     atm: atmReducer,
+    user: userReducer,
   },
 });
 

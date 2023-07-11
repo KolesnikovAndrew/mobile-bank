@@ -1,3 +1,4 @@
+import MapMarker from "features/mapMarker";
 import React from "react";
 import { FiSearch } from "react-icons/fi";
 import { FiX } from "react-icons/fi";
@@ -15,11 +16,15 @@ const Widget: React.FC<WidgetProps> = ({ onToggle }) => {
         </button>
       </div>
       <div>
-        <ul>
-          <li>A</li>
-          <li>B</li>
-          <li>C</li>
-        </ul>
+        <MapMarker />
+        <div>
+          <h3>Location</h3>
+          <p>Address</p>
+        </div>
+        <div>
+          <h3>How to Get There</h3>
+          <p>Brief description of how to get to the terminal</p>
+        </div>
       </div>
     </div>
   );
