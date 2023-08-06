@@ -7,8 +7,8 @@ function MapMarker() {
   };
 
   const center = {
-    lat: 51.5074, // Широта места
-    lng: -0.1278, // Долгота места
+    lat: 51.5074,
+    lng: -0.1278,
   };
 
   return (

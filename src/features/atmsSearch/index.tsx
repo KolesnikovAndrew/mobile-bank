@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../store";
 import { Atm } from "../../entities/atms/model/atms";
 import Searchbar from "../../shared/ui/searchbar";
-import AtmsList from "../../entities/atms/ui/atms";
+import AtmsList from "../../entities/atms/ui/atmsList";
 
 interface AtmsSearchProps {
   atms: Atm[];
@@ -16,6 +16,9 @@ const AtmsSearch: React.FC<AtmsSearchProps> = ({
 }) => {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState<Atm[]>([]);
+  const [searchResultOpened, setSearchResultOpen] = useState(false);
+
+  const searchResultRef = useRef<HTMLDivElement>(null);
 
   const handleSearch = (value: string) => {
     const filteredResults = atms.filter(
@@ -25,25 +28,49 @@ const AtmsSearch: React.FC<AtmsSearchProps> = ({
     );
 
     setSearchResults(filteredResults);
-
     setSearchText(value);
   };
 
+  const handleSearchbarClick = () => {
+    if (searchResults.length > 0) {
+      setSearchResultOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    setSearchResultOpen(searchText.length > 0);
+  }, [searchText]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchResultRef.current &&
+        !searchResultRef.current.contains(event.target as Node)
+      ) {
+        setSearchResultOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div>
+    <div ref={searchResultRef}>
       <Searchbar
         placeholder="ATMs"
         value={searchText}
         onChange={handleSearch}
+        onClick={handleSearchbarClick}
       />
-
-      {searchText.length > 0 && (
-        <div>
-          <AtmsList
-            handleWidtgetToggle={handleWidtgetToggle}
-            atms={searchResults}
-          />
-        </div>
+      {searchResultOpened && (
+        <AtmsList
+          handleWidtgetToggle={handleWidtgetToggle}
+          atms={searchResults}
+        />
       )}
     </div>
   );

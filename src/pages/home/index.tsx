@@ -1,31 +1,58 @@
 import React, { useState } from "react";
 import { Provider } from "react-redux";
-import store from "../../store";
-import AtmsSearch from "../../features/atmsSearch";
+import store from "store";
+import AtmsSearch from "features/atmsSearch";
 import Navbar from "shared/ui/navbar";
-import Widget from "shared/ui/widget";
-import UserCard from "./../../features/userCard/index";
-
+import UserCard from "features/userCard/index";
 import GiftButton from "features/giftButton";
+import AtmsSearchWidget from "widgets/atmsSearchWidget";
+import FeaturedActivitiesCarousel from "features/eventsCarousele";
+import FeaturedActivityCarousel from "widgets/homeFeaturedEventInfoCarousel";
 
 function HomePage() {
-  const [isWidgetOpen, setIsWidgetOpen] = useState(false);
-
+  const [isAtmsSearchWidgetOpen, setIsAtmsSearchWidgetOpen] = useState(false);
   const handleWidtgetToggle = () => {
-    setIsWidgetOpen(!isWidgetOpen);
+    setIsAtmsSearchWidgetOpen(!isAtmsSearchWidgetOpen);
   };
+
+  const [isFeaturedActivitiesCarouselOpen, setFeaturedActivitiesCarouselOpen] =
+    useState(false);
+
+  const handleFeaturedActivitiesCarouselToggle = () => {
+    setFeaturedActivitiesCarouselOpen(!isFeaturedActivitiesCarouselOpen);
+  };
+
   return (
     <Provider store={store}>
-      <div className="home-page">
+      <div className="home-page relative">
         <section className="atms-search">
           <AtmsSearch handleWidtgetToggle={handleWidtgetToggle} />
-          {isWidgetOpen && <Widget onToggle={handleWidtgetToggle} />}
+          {isAtmsSearchWidgetOpen && (
+            <AtmsSearchWidget
+              handleWidtgetToggle={handleWidtgetToggle}
+              isWidgetOpen={isAtmsSearchWidgetOpen}
+            />
+          )}
         </section>
         <section className="user-info">
-          <div className="flex items-center">
+          <div className="flex items-center place-content-around">
             <UserCard />
             <GiftButton />
           </div>
+        </section>
+        <section className="events-carousele">
+          <FeaturedActivitiesCarousel
+            handleFeaturedActivitiesCarouselToggle={
+              handleFeaturedActivitiesCarouselToggle
+            }
+          />
+          {isFeaturedActivitiesCarouselOpen && (
+            <FeaturedActivityCarousel
+              handleFeaturedActivitiesCarouselToggle={
+                handleFeaturedActivitiesCarouselToggle
+              }
+            />
+          )}
         </section>
         <Navbar />
       </div>

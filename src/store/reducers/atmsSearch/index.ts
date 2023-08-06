@@ -1,8 +1,8 @@
 // features/atm/atmSlice.ts
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Atm } from "../../entities/atms/model/atms";
-import { RootState } from "../../store";
+import { Atm } from "../../../entities/atms/model/atms";
+import { RootState } from "../..";
 
 interface AtmState {
   atms: Atm[];
@@ -50,6 +50,6 @@ const atmSlice = createSlice({
 
 export const { addAtm } = atmSlice.actions;
 
-export const selectAtmList = (state: RootState) => state.atm.atms;
+export const selectAtmList = (state: AtmState) => state.atms;
 
 export default atmSlice.reducer;

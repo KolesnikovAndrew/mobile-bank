@@ -13,7 +13,7 @@ const AtmsList: React.FC<AtmsListProps> = ({ atms, handleWidtgetToggle }) => {
   }
 
   return (
-    <div>
+    <div className="absolute rounded-b-lg bg-gray-100 -mt-1 w-full z-5 ">
       {atms.map((atm) => (
         <AtmCard
           key={atm.id}

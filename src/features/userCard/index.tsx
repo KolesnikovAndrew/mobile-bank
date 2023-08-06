@@ -11,7 +11,7 @@ const UserCard: React.FC = () => {
   const userInitial = user.name.charAt(0).toUpperCase();
 
   return (
-    <div className="flex items-center p-10">
+    <div className="flex items-center py-10">
       {hasIcon ? (
         <img src={user.icon} alt="User Icon" className="w-8 h-8 rounded-full" />
       ) : (
@@ -19,8 +19,8 @@ const UserCard: React.FC = () => {
           {userInitial}
         </div>
       )}
-      <div className="ml-2 text-4xl">{user.name}</div>
-      <div className="ml-2 text-4xl flex items-center">
+      <div className="ml-2 text-1xl font-bold">{user.name}</div>
+      <div className="ml-2 text-1xl font-bold flex items-center">
         <RiArrowRightSLine />
       </div>
     </div>

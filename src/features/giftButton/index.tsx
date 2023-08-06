@@ -3,34 +3,30 @@ import Modal from "react-modal";
 import { FaGift } from "react-icons/fa";
 import styles from "./index.module.css";
 const GiftButton: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isWidgetOpen, setIsWidgetOpen] = useState(false);
 
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
+  const handleWidtgetToggle = () => {
+    setIsWidgetOpen(!isWidgetOpen);
   };
 
   return (
     <>
       <button
         className="flex items-center bg-purple-500 text-white rounded-full px-4 py-2"
-        onClick={handleModalOpen}
+        onClick={handleWidtgetToggle}
       >
         <FaGift className="ml-1" /> For friend
       </button>
       <Modal
-        isOpen={isModalOpen}
-        onRequestClose={handleModalClose}
+        isOpen={isWidgetOpen}
+        onRequestClose={handleWidtgetToggle}
         shouldCloseOnOverlayClick={true}
         className={styles.modal}
         overlayClassName={styles.overlay}
         ariaHideApp={false}
       >
         <div className={styles.modal_content}>
-          <button className={styles.close_button} onClick={handleModalClose}>
+          <button className={styles.close_button} onClick={handleWidtgetToggle}>
             &times;
           </button>
           <h2>Referral Bonus</h2>
