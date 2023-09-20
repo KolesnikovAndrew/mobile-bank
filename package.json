@@ -51,7 +51,7 @@
     "start:server": "cd server && node app.js",
     "start:client": "cd client && npm start",
     "start:full": "concurrently \"npm run start:server\" \"npm run start:client\"",
-    "build": "react-scripts build",
+    "build": "cd client && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
