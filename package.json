@@ -48,7 +48,6 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
     "start:server": "cd server && node app.js",
     "start:client": "cd client && npm start",
     "start:full": "concurrently \"npm run start:server\" \"npm run start:client\"",
