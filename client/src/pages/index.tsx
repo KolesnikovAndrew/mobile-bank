@@ -15,6 +15,7 @@ export const Routing = () => {
       {routes.map(({ path, component: Component }) => (
         <Route exact path={path} key={path} component={Component} />
       ))}
+
       <Redirect to="/" />
     </Switch>
   );

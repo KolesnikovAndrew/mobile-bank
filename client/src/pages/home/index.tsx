@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Provider, useSelector, useDispatch } from "react-redux";
 import store from "store";
+import { AppDispatch, RootState } from "store";
+import { getLoginedUser } from "store/actions/usersActions";
+import { getActivities } from "store/actions/activitiesActions";
+import { getAtmsList } from "store/actions/atmsActions";
 import AtmsSearch from "features/atmsSearch";
+import AtmsSearchWidget from "widgets/atmsSearchWidget";
 import Navbar from "shared/ui/navbar";
 import UserCard from "features/userCard/index";
 import GiftButton from "features/giftButton";
-import AtmsSearchWidget from "widgets/atmsSearchWidget";
-import ActivitiesCarousel from "features/activitiesCarousele";
-import { AppDispatch, RootState } from "store";
-import { getLoginedUser } from "store/actions/usersActions";
 import LoadingIndicator from "shared/ui/loadingIndicator";
-import SlideCarousel from "shared/ui/slideCarousel";
-import { getActivities } from "store/actions/activitiesActions";
-import { getAtmsList } from "store/actions/atmsActions";
+import ActivitiesCarousel from "features/activitiesCarousele";
+import SlideCarouselContainer from "features/slideCarouselContainer";
+import { ItemWithSlides } from "shared/sharedTypes";
+import { Activity } from "entities/activity";
 
 function HomePage() {
   const userState = useSelector((state: RootState) => state.user);
+
   const activitiesState = useSelector((state: RootState) => state.activities);
   const atmsState = useSelector((state: RootState) => state.atm);
 
@@ -42,7 +45,20 @@ function HomePage() {
     openedActivityDetailsId
       ? setOpenedActivityDetailsId(0)
       : setOpenedActivityDetailsId(id);
+
+    console.log(typeof activitiesState);
   };
+
+  function mapActivitiesToItemsWithSlides(
+    activities: Activity[]
+  ): ItemWithSlides[] {
+    return activities.map((activity) => ({
+      title: activity.activityTitle,
+      id: activity.activityId,
+      slides: activity.slides,
+      icon: activity.activityIcon,
+    }));
+  }
 
   return (
     <Provider store={store}>
@@ -74,21 +90,20 @@ function HomePage() {
             handleActivityDetailsToggle={handleActivityDetailsToggle}
             activities={activitiesState}
           />
-          <section className="activity-details">
-            {isActivityDetailsOpen &&
-              activitiesState.map((activity) => {
-                return (
-                  activity.activityId === openedActivityDetailsId && (
-                    <SlideCarousel
-                      key={activity.activityId}
-                      slides={activity.slides}
-                      handleSlideCarouselToggle={handleActivityDetailsToggle}
-                    />
-                  )
-                );
-              })}
-          </section>
         </section>
+        <section className="activity-details">
+          <div id="modal-root"></div>
+          {isActivityDetailsOpen && (
+            <SlideCarouselContainer
+              modalRootElement={"modal-root"}
+              payload={mapActivitiesToItemsWithSlides(activitiesState)}
+              openedActivityDetailsId={openedActivityDetailsId}
+              handleActivityDetailsToggle={handleActivityDetailsToggle}
+              isActivityDetailsOpen={isActivityDetailsOpen}
+            />
+          )}
+        </section>
+
         <Navbar />
       </div>
     </Provider>
